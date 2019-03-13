@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>qml/MainPage.qml</file>
+        <file>qml/AnswersPage.qml</file>
+        <file>qml/ActionsPage.qml</file>
+        <file>qml/SettingsPage.qml</file>
+        <file>qml/TiltSensorPage.qml</file>
+        <file>pictures/bolt_joint_icon.png</file>
+        <file>pictures/service_marks_icon.png</file>
+        <file>pictures/track_marks_icon.png</file>
+    </qresource>
+</RCC>
