@@ -310,10 +310,6 @@ void Backend::tiltSensorRead()
         _tiltMeasures.clear();
         emit doTiltXRotationChanged(ceil(value * 2) / 2);
     }
-
-    //    double tiltValue = _tiltSensor->reading()->yRotation();
-    //    //    qDebug() << tiltValue << ceil(tiltValue * 2) / 2;
-    //    emit doTiltXRotationChanged(ceil(tiltValue * 2) / 2);
 }
 
 #ifdef ANDROID
