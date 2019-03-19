@@ -179,7 +179,10 @@ Page {
                 color: backButton.down ? "white" : "black"
                 radius: 8
             }
-            onReleased: stackView.pop()
+            onReleased: {
+                backend.reconnect();
+                stackView.pop()
+            }
         }
         border.width: 10
     }

@@ -122,6 +122,12 @@ void Backend::action(char operatorAction)
     sendMessageToTrainingPc(MessageId::OperatorActionId, data);
 }
 
+void Backend::reconnect()
+{
+    reConnectTrainingPc();
+    reConnectCdu();
+}
+
 void Backend::connectCdu()
 {
     if (_cduTcpSocket == nullptr) {
@@ -162,6 +168,18 @@ void Backend::disconnectTrainingPc()
         _trainingPcTcpSocket->deleteLater();
         _trainingPcTcpSocket = nullptr;
     }
+}
+
+void Backend::reConnectTrainingPc()
+{
+    disconnectTrainingPc();
+    QTimer::singleShot(3000, this, &Backend::connectTrainingPc);
+}
+
+void Backend::reConnectCdu()
+{
+    disconnectCdu();
+    QTimer::singleShot(3000, this, &Backend::connectCdu);
 }
 
 void Backend::cduTcpSocketStateChanged(QAbstractSocket::SocketState state)

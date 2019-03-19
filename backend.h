@@ -31,6 +31,7 @@ public:
     Q_INVOKABLE void calibrateTiltSensor();
     Q_INVOKABLE void answerToQuestion(char answer);
     Q_INVOKABLE void action(char operatorAction);
+    Q_INVOKABLE void reconnect();
 
 signals:
     void doCduConnected();
@@ -53,6 +54,8 @@ private:
     void disconnectCdu();
     void connectTrainingPc();
     void disconnectTrainingPc();
+    void reConnectTrainingPc();
+    void reConnectCdu();
     void cduTcpSocketStateChanged(QAbstractSocket::SocketState state);
     void cduTcpSocketReadyRead();
     void trainingPcTcpSocketStateChanged(QAbstractSocket::SocketState state);
