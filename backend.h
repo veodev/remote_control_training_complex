@@ -44,6 +44,9 @@ signals:
     void doTiltXRotationChanged(float angle, float speed);
 
 private:
+#ifdef ANDROID
+    void keepScreenOn(bool on);
+#endif
     void connectCdu();
     void disconnectCdu();
     void connectTrainingPc();
@@ -60,9 +63,8 @@ private:
     void trainingPcPingTimerTimeout();
     void changeRcMode(RcMode mode);
     void tiltSensorRead();
-#ifdef ANDROID
-    void keepScreenOn(bool on);
-#endif
+    void sendMessageToTrainingPc(MessageId messageId, QByteArray data = QByteArray());
+    void sendMessageToCdu(MessageId messageId, QByteArray data = QByteArray());
 
 private:
     QTcpSocket* _cduTcpSocket;

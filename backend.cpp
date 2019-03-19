@@ -266,14 +266,7 @@ void Backend::cduWatchdogTimeout()
 
 void Backend::cduPingTimerTimeout()
 {
-    if (_cduTcpSocket != nullptr) {
-        MessageHeader header;
-        header.Id = static_cast<unsigned char>(MessageId::PingId);
-        header.Reserved1 = 0;
-        header.Size = 0;
-        _cduTcpSocket->write(reinterpret_cast<char*>(&header), sizeof(header));
-        _cduTcpSocket->flush();
-    }
+    sendMessageToCdu(MessageId::PingId);
 }
 
 void Backend::trainingPcWatchdogTimeout()
@@ -284,14 +277,7 @@ void Backend::trainingPcWatchdogTimeout()
 
 void Backend::trainingPcPingTimerTimeout()
 {
-    if (_trainingPcTcpSocket != nullptr) {
-        MessageHeader header;
-        header.Id = static_cast<unsigned char>(MessageId::PingId);
-        header.Reserved1 = 0;
-        header.Size = 0;
-        _trainingPcTcpSocket->write(reinterpret_cast<char*>(&header), sizeof(header));
-        _trainingPcTcpSocket->flush();
-    }
+    sendMessageToTrainingPc(MessageId::PingId);
 }
 
 void Backend::changeRcMode(RcMode mode)
@@ -314,6 +300,36 @@ void Backend::tiltSensorRead()
         float speed = angle * SPEED_FACTOR;
         _tiltMeasures.clear();
         emit doTiltXRotationChanged(angle, speed);
+    }
+}
+
+void Backend::sendMessageToTrainingPc(MessageId messageId, QByteArray data)
+{
+    if (_trainingPcTcpSocket != nullptr) {
+        MessageHeader header;
+        header.Id = static_cast<unsigned char>(messageId);
+        header.Reserved1 = 0;
+        header.Size = 0;
+        _trainingPcTcpSocket->write(reinterpret_cast<char*>(&header), sizeof(header));
+        if (!data.isEmpty()) {
+            _trainingPcTcpSocket->write(data);
+        }
+        _trainingPcTcpSocket->flush();
+    }
+}
+
+void Backend::sendMessageToCdu(MessageId messageId, QByteArray data)
+{
+    if (_cduTcpSocket != nullptr) {
+        MessageHeader header;
+        header.Id = static_cast<unsigned char>(messageId);
+        header.Reserved1 = 0;
+        header.Size = 0;
+        _cduTcpSocket->write(reinterpret_cast<char*>(&header), sizeof(header));
+        if (!data.isEmpty()) {
+            _cduTcpSocket->write(data);
+        }
+        _cduTcpSocket->flush();
     }
 }
 
