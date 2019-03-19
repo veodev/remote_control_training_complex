@@ -41,9 +41,8 @@ signals:
     void doTrainingPcIpAddressChanged();
     void doCduPortChanged();
     void doTrainingPcPortChanged();
-    void doTiltXRotationChanged(qreal value);
+    void doTiltXRotationChanged(float angle, float speed);
 
-public slots:
 private:
     void connectCdu();
     void disconnectCdu();

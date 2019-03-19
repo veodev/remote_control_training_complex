@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QTimer>
 #include <QtEndian>
+#include <math.h>
 #ifdef ANDROID
 #include <QtAndroidExtras>
 #endif
@@ -10,6 +11,8 @@
 const int PING_INTERVAL_MS = 500;
 const int WATCHDOG_INTERVAL_MS = 3000;
 const int TILT_SENSOR_READING_INTERVAL_MS = 10;
+const float SPEED_FACTOR = 138.8f;
+const int MAX_ANGLE_DEGREES = 10;
 
 Backend::Backend(QObject* parent)
     : QObject(parent)
@@ -307,8 +310,10 @@ void Backend::tiltSensorRead()
     _tiltMeasures.append(_tiltReading->yRotation());
     if (_tiltMeasures.size() >= 16) {
         double value = std::accumulate(_tiltMeasures.begin(), _tiltMeasures.end(), 0.0) / _tiltMeasures.size();
+        float angle = static_cast<float>(std::ceil(value * 2) / 2);
+        float speed = angle * SPEED_FACTOR;
         _tiltMeasures.clear();
-        emit doTiltXRotationChanged(ceil(value * 2) / 2);
+        emit doTiltXRotationChanged(angle, speed);
     }
 }
 

@@ -23,23 +23,34 @@ Page {
             GradientStop {position: 1; color: "#ffffff";}
         }
 
-        ColumnLayout {
-            id: columnLayout
-            x: 286
-            y: 173
-            width: 100
-            height: 100
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
+    }
 
-            Text {
-                id: forwardText
-                width: 40
-                color: "#000000"
-                text: qsTr("▲")
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                font.pixelSize: 50
-            }
+    ColumnLayout {
+        id: columnLayout
+        x: 302
+        y: 136
+        width: 550
+        height: 244
+        anchors.horizontalCenter: parent.horizontalCenter
+        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+        Layout.fillHeight: false
+        Layout.fillWidth: true
+        anchors.verticalCenter: parent.verticalCenter
+
+        Text {
+            id: forwardText
+            width: 40
+            color: "#000000"
+            text: qsTr("▲")
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            font.pixelSize: 50
+        }
+
+        RowLayout {
+            id: rowLayout
+            width: 203
+            height: 100
+            spacing: 20
 
             Text {
                 id: xRotationText
@@ -61,12 +72,27 @@ Page {
             }
 
             Text {
-                id: backwardText
-                text: qsTr("▼")
+                id: speedText
+                width: 110
+                height: 58
+                text: qsTr("0")
+                font.pixelSize: 30
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                font.pixelSize: 50
+                Layout.fillHeight: false
+                Layout.fillWidth: true
             }
+
         }
+
+        Text {
+            id: backwardText
+            text: qsTr("▼")
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            font.pixelSize: 50
+        }
+
     }
 
     Rectangle {
@@ -101,11 +127,11 @@ Page {
     Connections {
         target: backend
         onDoTiltXRotationChanged: {
-            if (value < 0) {
+            if (angle < 0) {
                 forwardText.color = "transparent"
                 backwardText.color = "black"
             }
-            else if (value > 0) {
+            else if (angle > 0) {
                 forwardText.color = "black"
                 backwardText.color = "transparent"
             }
@@ -113,7 +139,10 @@ Page {
                 forwardText.color = "black"
                 backwardText.color = "black"
             }
-            xRotationText.text = Number(value).toFixed(1) + "°";
+            xRotationText.text = Number(angle).toFixed(1) + "°";
+            speedText.text = Number(speed).toFixed(1) + " мм/с"
+
         }
     }
+
 }
