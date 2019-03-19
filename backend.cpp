@@ -45,13 +45,13 @@ Backend::Backend(QObject* parent)
     connectTrainingPc();
 
     _tiltSensor = new QTiltSensor(this);
-    qDebug() << "TILT SENSOR START: " << _tiltSensor->start();
+    _tiltSensor->start();
     _tiltSensor->connectToBackend();
-
     connect(&_tiltSensorReadingTimer, &QTimer::timeout, this, &Backend::tiltSensorRead);
     _tiltSensorReadingTimer.setInterval(TILT_SENSOR_READING_INTERVAL_MS);
 #ifdef ANDROID
     _tiltSensorReadingTimer.start();
+    _tiltSensor->calibrate();
 #endif
 }
 
