@@ -51,6 +51,7 @@ Page {
                 radius: 8
             }
             onReleased: {
+                backend.action(1)
                 stackView.pop()
             }
         }
@@ -85,6 +86,7 @@ Page {
                 verticalAlignment: Text.AlignVCenter
             }
             onReleased: {
+                backend.action(2)
                 stackView.pop()
             }
         }

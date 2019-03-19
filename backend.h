@@ -29,6 +29,8 @@ public:
     void setTrainingPcPort(quint16 port);
 
     Q_INVOKABLE void calibrateTiltSensor();
+    Q_INVOKABLE void answerToQuestion(char answer);
+    Q_INVOKABLE void action(char operatorAction);
 
 signals:
     void doCduConnected();

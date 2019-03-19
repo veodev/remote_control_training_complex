@@ -5,6 +5,7 @@ import QtQuick.Window 2.2
 
 Page {
     id: page
+    property int answerToQuestion: 0
     Rectangle {
         id: rcRectangle
         anchors.fill: parent
@@ -71,6 +72,7 @@ Page {
                 if (checked) {
                     secondAnswerButton.checked = false;
                     thirdAnswerButton.checked = false;
+                    answerToQuestion = 1;
                 }
             }
         }
@@ -110,6 +112,7 @@ Page {
                 if (checked) {
                     firstAnswerButton.checked = false;
                     thirdAnswerButton.checked = false;
+                    answerToQuestion = 2;
                 }
             }
         }
@@ -148,6 +151,7 @@ Page {
                 if (checked) {
                     firstAnswerButton.checked = false;
                     secondAnswerButton.checked = false;
+                    answerToQuestion = 3;
                 }
             }
         }
@@ -183,6 +187,8 @@ Page {
                 firstAnswerButton.checked = false;
                 secondAnswerButton.checked = false;
                 thirdAnswerButton.checked = false;
+                backend.answerToQuestion(answerToQuestion)
+                answerToQuestion = 0
             }
         }
         border.color: "#000000"

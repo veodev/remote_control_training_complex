@@ -108,6 +108,20 @@ void Backend::calibrateTiltSensor()
     _tiltSensor->calibrate();
 }
 
+void Backend::answerToQuestion(char answer)
+{
+    QByteArray data;
+    data.append(answer);
+    sendMessageToTrainingPc(MessageId::AnswerToQuestionId, data);
+}
+
+void Backend::action(char operatorAction)
+{
+    QByteArray data;
+    data.append(operatorAction);
+    sendMessageToTrainingPc(MessageId::OperatorActionId, data);
+}
+
 void Backend::connectCdu()
 {
     if (_cduTcpSocket == nullptr) {
