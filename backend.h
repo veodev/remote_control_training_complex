@@ -32,6 +32,10 @@ public:
     Q_INVOKABLE void answerToQuestion(char answer);
     Q_INVOKABLE void action(char operatorAction);
     Q_INVOKABLE void reconnect();
+    Q_INVOKABLE void trackMarkButtonReleased();
+    Q_INVOKABLE void serviceMarkButtonReleased();
+    Q_INVOKABLE void boltJointButtonPressed();
+    Q_INVOKABLE void boltJointButtonReleased();
 
 signals:
     void doCduConnected();

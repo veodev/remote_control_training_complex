@@ -128,6 +128,30 @@ void Backend::reconnect()
     reConnectCdu();
 }
 
+void Backend::trackMarkButtonReleased()
+{
+    QByteArray data;
+    data.append(char(CduMode::TrackMarksMode));
+    sendMessageToCdu(MessageId::ChangeCduModeId, data);
+}
+
+void Backend::serviceMarkButtonReleased()
+{
+    QByteArray data;
+    data.append(char(CduMode::ServiceMarksMode));
+    sendMessageToCdu(MessageId::ChangeCduModeId, data);
+}
+
+void Backend::boltJointButtonPressed()
+{
+    sendMessageToCdu(MessageId::BoltJointOnId);
+}
+
+void Backend::boltJointButtonReleased()
+{
+    sendMessageToCdu(MessageId::BoltJointOffId);
+}
+
 void Backend::connectCdu()
 {
     if (_cduTcpSocket == nullptr) {
@@ -332,6 +356,9 @@ void Backend::tiltSensorRead()
         float speed = angle * SPEED_FACTOR;
         _tiltMeasures.clear();
         emit doTiltXRotationChanged(angle, speed);
+        QByteArray data;
+        data.append(reinterpret_cast<char*>(&speed), sizeof(speed));
+        sendMessageToTrainingPc(MessageId::ManipulatorStateId, data);
     }
 }
 
@@ -341,7 +368,7 @@ void Backend::sendMessageToTrainingPc(MessageId messageId, QByteArray data)
         MessageHeader header;
         header.Id = static_cast<unsigned char>(messageId);
         header.Reserved1 = 0;
-        header.Size = 0;
+        header.Size = static_cast<ushort>(data.size());
         _trainingPcTcpSocket->write(reinterpret_cast<char*>(&header), sizeof(header));
         if (!data.isEmpty()) {
             _trainingPcTcpSocket->write(data);
@@ -356,7 +383,7 @@ void Backend::sendMessageToCdu(MessageId messageId, QByteArray data)
         MessageHeader header;
         header.Id = static_cast<unsigned char>(messageId);
         header.Reserved1 = 0;
-        header.Size = 0;
+        header.Size = static_cast<ushort>(data.size());
         _cduTcpSocket->write(reinterpret_cast<char*>(&header), sizeof(header));
         if (!data.isEmpty()) {
             _cduTcpSocket->write(data);

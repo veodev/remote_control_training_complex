@@ -44,6 +44,7 @@ Page {
                 radius: 8;
                 color: trackmarkButton.down ? "#292929" : "#000000";
             }
+            onReleased: backend.trackMarkButtonReleased();
         }
     }
 
@@ -66,6 +67,7 @@ Page {
                 radius: 8;
                 color: serviceMarkButton.down ? "#292929" : "#000000";
             }
+            onReleased: backend.serviceMarkButtonReleased();
         }
     }
 
@@ -87,6 +89,8 @@ Page {
                 radius: 8;
                 color: boltJointButton.down ? "#292929": "#000000";
             }
+            onPressed: backend.boltJointButtonPressed();
+            onReleased: backend.boltJointButtonReleased();
         }
     }
 
