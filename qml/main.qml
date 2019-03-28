@@ -14,10 +14,11 @@ Window {
     ActionsPage {id: actionsPage; visible: false;}
     SettingsPage {id: settingsPage; visible: false;}
     TiltSensorPage {id: tiltSensorPage; visible: false;}
+    LoadingPage {id: loadingPage; visible: false;}    
 
     id: window
     visible: true
-    visibility: "FullScreen"
+//    visibility: "FullScreen"
     width: 800
     height: 480
 
@@ -28,8 +29,7 @@ Window {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.topMargin: 0
-        initialItem: mainPage
-
+        initialItem: loadingPage
     }
 
     Row {
@@ -111,10 +111,16 @@ Window {
         }
         onDoTrainingPcConnected: {
             tpcConnectionRectangle.color = "green"
+            stackView.pop()
+            stackView.push(mainPage)
         }
 
         onDoTrainingPcDisconnected: {
             tpcConnectionRectangle.color = "red"
+            if (settingsPage.visible === false) {
+                stackView.pop()
+                stackView.push(loadingPage)
+            }
         }
     }
 }

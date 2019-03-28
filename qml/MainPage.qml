@@ -4,10 +4,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 
 
-Page {
-    readonly property int maxCountClicks: 3
-    property int countClicks: 0;
-
+Page {   
     id: page
     Rectangle {
         id: rcRectangle
@@ -170,18 +167,6 @@ Page {
         anchors.verticalCenterOffset: 0
         anchors.verticalCenter: operatorActionsButtonRectangle.verticalCenter
         border.width: 3
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                ++countClicks
-                if (countClicks >= maxCountClicks) {
-                    stackView.pop();
-                    stackView.push(settingsPage)
-                    countClicks = 0
-                }
-            }
-        }
 
         Text {
             id: element

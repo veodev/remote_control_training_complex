@@ -35,17 +35,21 @@ Page {
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 24
+            anchors.horizontalCenter: parent.horizontalCenter
         }
     }
     Rectangle {
         id: firstButtonRectangle
-        width: 130
-        height: 130
+        width: 100
+        height: 100
         color: "#636363"
+        anchors.rightMargin: 100
         border.color: "#000000"
         border.width: 10
         x: 63
         y: 97
+        anchors.right: secondButtonRectangle.left
+        anchors.leftMargin: 80
         Button {
             id: firstAnswerButton
             width: parent.width - 15 - parent.border.width
@@ -80,13 +84,13 @@ Page {
 
     Rectangle {
         id: secondButtonRectangle
-        width: 130
-        height: 130
+        width: 100
+        height: 100
         color: "#636363"
         border.color: "#000000"
         border.width: 10
-        x: 255
         y: 97
+        anchors.horizontalCenter: parent.horizontalCenter
 
         Button {
             id: secondAnswerButton
@@ -120,12 +124,13 @@ Page {
 
     Rectangle {
         id: thirdButtonRectangle
-        width: 130
-        height: 130
+        width: 100
+        height: 100
         color: "#636363"
+        anchors.left: secondButtonRectangle.right
+        anchors.leftMargin: 100
         border.color: "#000000"
         border.width: 10
-        x: 443
         y: 97
         Button {
             id: thirdAnswerButton
@@ -159,10 +164,11 @@ Page {
 
     Rectangle {
         x: 152
-        y: 263
         width: 510
-        height: 130
+        height: 100
         color: "#636363"
+        anchors.top: secondButtonRectangle.bottom
+        anchors.topMargin: 40
         anchors.horizontalCenterOffset: -2
         anchors.horizontalCenter: secondButtonRectangle.horizontalCenter
         Button {

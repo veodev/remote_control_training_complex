@@ -9,5 +9,6 @@
         <file>pictures/bolt_joint_icon.png</file>
         <file>pictures/service_marks_icon.png</file>
         <file>pictures/track_marks_icon.png</file>
+        <file>qml/LoadingPage.qml</file>
     </qresource>
 </RCC>
