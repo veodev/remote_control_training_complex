@@ -43,7 +43,7 @@ Page {
 
             Label {
                 color: "#000000"
-                text: "IP-адрес CDU:"
+                text: "IP-адрес CDU (IP:PORT):"
                 horizontalAlignment: Text.AlignRight
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 Layout.fillWidth: false
@@ -102,7 +102,7 @@ Page {
             anchors.leftMargin: 40
             Label {
                 color: "#000000"
-                text: "IP-адрес T_PC:"
+                text: "IP-адрес T_PC (IP:PORT):"
                 font.pointSize: 20
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 horizontalAlignment: Text.AlignRight
