@@ -24,12 +24,13 @@ Page {
         }
 
         Text {
-            id: element
+            id: titleText
             x: 48
-            y: 40
             width: 501
             height: 29
             text: qsTr("Выберите вариант ответа на вопрос.")
+            anchors.top: parent.top
+            anchors.topMargin: 40
             wrapMode: Text.WordWrap
             font.bold: true
             verticalAlignment: Text.AlignVCenter
@@ -43,11 +44,12 @@ Page {
         width: 100
         height: 100
         color: "#636363"
+        anchors.top: parent.top
+        anchors.topMargin: 95
         anchors.rightMargin: 100
         border.color: "#000000"
         border.width: 10
         x: 63
-        y: 97
         anchors.right: secondButtonRectangle.left
         anchors.leftMargin: 80
         Button {
@@ -87,6 +89,7 @@ Page {
         width: 100
         height: 100
         color: "#636363"
+        anchors.verticalCenter: firstButtonRectangle.verticalCenter
         border.color: "#000000"
         border.width: 10
         y: 97
@@ -127,6 +130,7 @@ Page {
         width: 100
         height: 100
         color: "#636363"
+        anchors.verticalCenter: secondButtonRectangle.verticalCenter
         anchors.left: secondButtonRectangle.right
         anchors.leftMargin: 100
         border.color: "#000000"
@@ -164,12 +168,12 @@ Page {
 
     Rectangle {
         x: 152
-        width: 510
-        height: 100
+        width: 500
+        height: 80
         color: "#636363"
         anchors.top: secondButtonRectangle.bottom
-        anchors.topMargin: 40
-        anchors.horizontalCenterOffset: -2
+        anchors.topMargin: 30
+        anchors.horizontalCenterOffset: 0
         anchors.horizontalCenter: secondButtonRectangle.horizontalCenter
         Button {
             id: confirmationButton
@@ -206,3 +210,8 @@ Page {
                           thirdAnswerButton.checked = false;
                       }
 }
+
+/*##^## Designer {
+    D{i:0;autoSize:true;height:480;width:640}D{i:6;anchors_y:40}D{i:7;anchors_y:97}
+}
+ ##^##*/

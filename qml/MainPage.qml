@@ -25,8 +25,8 @@ Page {
     }
     Rectangle {
         id: trackMarkButtonRectangle
-        width: 125
-        height: 125
+        width: 120
+        height: 120
         color: "#636363"
         border.color: "#000000"
         border.width: 10
@@ -47,8 +47,8 @@ Page {
 
     Rectangle {
         id: serviceMarkButtonRectangle
-        width: 125
-        height: 125
+        width: 120
+        height: 120
         color: "#636363"
         border.color: "#000000"
         border.width: 10
@@ -70,13 +70,13 @@ Page {
 
     Rectangle {
         id: boltJointButtonRectangle
-        width: 125
-        height: 125
+        width: 120
+        height: 120
         color: "#636363"
         border.color: "#000000"
         border.width: 10
         x: 52
-        y: 215
+        y: 191
         Button {
             id: boltJointButton
             width: parent.width - 20 - parent.border.width
@@ -136,9 +136,9 @@ Page {
     Rectangle {
         id: operatorActionsButtonRectangle
         x: 289
-        y: 215
-        width: 125
-        height: 125
+        y: 192
+        width: 120
+        height: 120
         color: "#636363"
         Button {
             id: operatorActionsButton

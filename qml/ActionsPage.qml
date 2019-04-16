@@ -24,12 +24,14 @@ Page {
     }
 
     Rectangle {
+        id: putFlagButtonRectangle
         x: 54
-        y: 248
         width: 510
         height: 81
         color: "#636363"
-        anchors.horizontalCenterOffset: -14
+        anchors.top: putSwitchLockerButtonRectangle.bottom
+        anchors.topMargin: 13
+        anchors.horizontalCenterOffset: 0
         anchors.horizontalCenter: rcRectangle.horizontalCenter
         border.color: "#000000"
         border.width: 10
@@ -58,12 +60,14 @@ Page {
     }
 
     Rectangle {
+        id: putSwitchLockerButtonRectangle
         x: 54
-        y: 148
         width: 510
         height: 80
         color: "#636363"
-        anchors.horizontalCenterOffset: -14
+        anchors.top: backButtonRectangle.bottom
+        anchors.topMargin: 13
+        anchors.horizontalCenterOffset: 0
         border.width: 10
         anchors.horizontalCenter: parent.horizontalCenter
         border.color: "#000000"
@@ -93,6 +97,7 @@ Page {
     }
 
     Rectangle {
+        id: backButtonRectangle
         x: 51
         y: 51
         width: 100
@@ -121,3 +126,10 @@ Page {
         }
     }
 }
+
+
+
+/*##^## Designer {
+    D{i:0;autoSize:true;height:480;width:640}D{i:6;anchors_y:226}D{i:10;anchors_y:134}
+}
+ ##^##*/

@@ -14,21 +14,17 @@ Window {
     ActionsPage {id: actionsPage; visible: false;}
     SettingsPage {id: settingsPage; visible: false;}
     TiltSensorPage {id: tiltSensorPage; visible: false;}
-    LoadingPage {id: loadingPage; visible: false;}    
+    LoadingPage {id: loadingPage; visible: false;}
 
     id: window
     visible: true
-//    visibility: "FullScreen"
+    visibility: "FullScreen"
     width: 800
     height: 480
 
     StackView {
         id: stackView;
-        anchors.top: row2.bottom
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.topMargin: 0
+        anchors.fill: parent
         initialItem: loadingPage
     }
 
@@ -37,10 +33,10 @@ Window {
         width: 261
         height: 14
         anchors.left: parent.left
-        anchors.leftMargin: 10
+        anchors.leftMargin: 40
         spacing: 0
         anchors.top: parent.top
-        anchors.topMargin: 5
+        anchors.topMargin: 20
 
         Row {
             id: column
@@ -52,6 +48,7 @@ Window {
                 id: element1
                 width: 22
                 height: 12
+                color: "#ffffff"
                 text: "CDU:"
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -77,6 +74,7 @@ Window {
                 id: element2
                 width: 22
                 height: 12
+                color: "#ffffff"
                 text: "TPC:"
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: 12

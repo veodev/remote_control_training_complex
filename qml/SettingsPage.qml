@@ -42,6 +42,7 @@ Page {
             anchors.margins: 10
 
             Label {
+                width: 291
                 color: "#000000"
                 text: "IP-адрес CDU (IP:PORT):"
                 horizontalAlignment: Text.AlignRight
@@ -58,7 +59,7 @@ Page {
                 horizontalAlignment: Text.AlignLeft
                 validator: ipAddressRegExp
                 text: backend._cduIpAddress
-                Layout.minimumWidth: 300
+                Layout.minimumWidth: 100
                 topPadding: 10
                 font.bold: true
                 Layout.fillWidth: true
@@ -114,7 +115,7 @@ Page {
             TextField {
                 id: trainingPcIpAddressText
                 text: backend._trainingPcIpAddress
-                Layout.minimumWidth: 300
+                Layout.minimumWidth: 100
                 font.bold: true
                 topPadding: 10
                 horizontalAlignment: Text.AlignLeft
@@ -157,7 +158,7 @@ Page {
 
     Rectangle {
         x: 51
-        y: 45
+        y: 51
         width: 100
         height: 70
         color: "#636363"
@@ -187,3 +188,8 @@ Page {
         border.width: 10
     }
 }
+
+/*##^## Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+ ##^##*/
