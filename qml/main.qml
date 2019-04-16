@@ -3,12 +3,11 @@ import QtQuick.Window 2.11
 
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.4
-import QtQuick.Window 2.2
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Dialogs 1.2
 
 
-Window {
+ApplicationWindow {
     MainPage {id: mainPage; visible: false;}
     AnswersPage {id: answersPage; visible: false;}
     ActionsPage {id: actionsPage; visible: false;}
@@ -120,5 +119,8 @@ Window {
                 stackView.push(loadingPage)
             }
         }
+    }
+    onClosing: {
+        close.accepted = false
     }
 }
