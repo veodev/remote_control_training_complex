@@ -24,7 +24,7 @@ ApplicationWindow {
     StackView {
         id: stackView;
         anchors.fill: parent
-        initialItem: loadingPage
+        initialItem: loadingPage        
     }
 
     Row {
@@ -92,12 +92,16 @@ ApplicationWindow {
     Connections {
         target: backend
         onDoMainMode: {
-            stackView.pop();
-            stackView.push(mainPage);
+            if (stackView.currentItem !== mainPage) {
+                stackView.pop();
+                stackView.push(mainPage);
+            }
         }
         onDoAnswerMode: {
-            stackView.pop();
-            stackView.push(answersPage);
+            if (stackView.currentItem !== answersPage) {
+                stackView.pop();
+                stackView.push(answersPage);
+            }
         }
         onDoCduConnected: {
             cduConnectionRectangle.color = "green"
@@ -107,8 +111,7 @@ ApplicationWindow {
             cduConnectionRectangle.color = "red"
         }
         onDoTrainingPcConnected: {
-            tpcConnectionRectangle.color = "green"
-            stackView.pop()
+            tpcConnectionRectangle.color = "green"            
             stackView.push(mainPage)
         }
 
