@@ -165,6 +165,7 @@ void Backend::connectCdu()
 void Backend::disconnectCdu()
 {
     if (_cduTcpSocket != nullptr) {
+        _cduPingTimer.stop();
         _cduTcpSocket->disconnectFromHost();
         disconnect(_cduTcpSocket, &QTcpSocket::stateChanged, this, &Backend::cduTcpSocketStateChanged);
         disconnect(_cduTcpSocket, &QTcpSocket::readyRead, this, &Backend::cduTcpSocketReadyRead);
@@ -176,6 +177,7 @@ void Backend::disconnectCdu()
 void Backend::connectTrainingPc()
 {
     if (_trainingPcTcpSocket == nullptr) {
+        _trainingPcPingTimer.stop();
         _trainingPcTcpSocket = new QTcpSocket(this);
         connect(_trainingPcTcpSocket, &QTcpSocket::stateChanged, this, &Backend::trainingPcTcpSocketStateChanged);
         connect(_trainingPcTcpSocket, &QTcpSocket::readyRead, this, &Backend::trainingPcTcpSocketReadyRead);
@@ -197,13 +199,13 @@ void Backend::disconnectTrainingPc()
 void Backend::reConnectTrainingPc()
 {
     disconnectTrainingPc();
-    QTimer::singleShot(3000, this, &Backend::connectTrainingPc);
+    QTimer::singleShot(5000, this, &Backend::connectTrainingPc);
 }
 
 void Backend::reConnectCdu()
 {
     disconnectCdu();
-    QTimer::singleShot(3000, this, &Backend::connectCdu);
+    QTimer::singleShot(5000, this, &Backend::connectCdu);
 }
 
 void Backend::cduTcpSocketStateChanged(QAbstractSocket::SocketState state)
@@ -211,8 +213,7 @@ void Backend::cduTcpSocketStateChanged(QAbstractSocket::SocketState state)
     switch (state) {
     case QAbstractSocket::UnconnectedState:
         emit doCduDisconnected();
-        disconnectCdu();
-        QTimer::singleShot(3000, this, &Backend::connectCdu);
+        reConnectCdu();
         break;
     case QAbstractSocket::ConnectingState:
         break;
@@ -236,8 +237,7 @@ void Backend::trainingPcTcpSocketStateChanged(QAbstractSocket::SocketState state
     switch (state) {
     case QAbstractSocket::UnconnectedState:
         emit doTrainingPcDisconnected();
-        disconnectTrainingPc();
-        QTimer::singleShot(3000, this, &Backend::connectTrainingPc);
+        reConnectTrainingPc();
         break;
     case QAbstractSocket::ConnectingState:
         break;
@@ -316,8 +316,9 @@ void Backend::parseTrainingPcMessages()
 
 void Backend::cduWatchdogTimeout()
 {
-    _cduPingTimer.stop();
     emit doCduDisconnected();
+    _cduPingTimer.stop();
+    reConnectCdu();
 }
 
 void Backend::cduPingTimerTimeout()
@@ -327,8 +328,9 @@ void Backend::cduPingTimerTimeout()
 
 void Backend::trainingPcWatchdogTimeout()
 {
-    _trainingPcPingTimer.stop();
     emit doTrainingPcDisconnected();
+    _trainingPcPingTimer.stop();
+    reConnectTrainingPc();
 }
 
 void Backend::trainingPcPingTimerTimeout()
