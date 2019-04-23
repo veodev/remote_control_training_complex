@@ -29,10 +29,11 @@ ApplicationWindow {
 
     Row {
         id: row2
-        width: 261
+        x: 663
+        width: 97
         height: 14
-        anchors.left: parent.left
-        anchors.leftMargin: 40
+        anchors.right: parent.right
+        anchors.rightMargin: 40
         spacing: 0
         anchors.top: parent.top
         anchors.topMargin: 20
@@ -112,6 +113,9 @@ ApplicationWindow {
         }
         onDoTrainingPcConnected: {
             tpcConnectionRectangle.color = "green"            
+            if (settingsPage.visible === true) {
+                stackView.pop()
+            }
             stackView.push(mainPage)
         }
 
