@@ -36,6 +36,9 @@ public:
     Q_INVOKABLE void serviceMarkButtonReleased();
     Q_INVOKABLE void boltJointButtonPressed();
     Q_INVOKABLE void boltJointButtonReleased();
+    Q_INVOKABLE void setDebugMode(bool isDebug);
+    Q_INVOKABLE void changeAngle(float addition);
+    Q_INVOKABLE void changeMotionMode(bool isMotion);
 
 signals:
     void doCduConnected();
@@ -90,6 +93,8 @@ private:
 
     bool _isCduConnect;
     bool _isTrainingPcConnect;
+    bool _isDebugMode;
+    bool _isMotion;
 
     QString _cduIpAddress;
     QString _trainingPcIpAddress;
@@ -101,6 +106,7 @@ private:
 
     QTimer _tiltSensorReadingTimer;
     QVector<qreal> _tiltMeasures;
+    float _debugAngle;
 };
 
 #endif  // BACKEND_H

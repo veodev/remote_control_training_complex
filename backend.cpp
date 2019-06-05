@@ -20,6 +20,9 @@ Backend::Backend(QObject* parent)
     , _trainingPcTcpSocket(nullptr)
     , _isCduConnect(false)
     , _isTrainingPcConnect(false)
+    , _isDebugMode(false)
+    , _isMotion(true)
+    , _debugAngle(0.0)
 {
 #ifdef ANDROID
     keepScreenOn(true);
@@ -150,6 +153,23 @@ void Backend::boltJointButtonPressed()
 void Backend::boltJointButtonReleased()
 {
     sendMessageToCdu(MessageId::BoltJointOffId);
+}
+
+void Backend::setDebugMode(bool isDebug)
+{
+    _isDebugMode = isDebug;
+    _debugAngle = 0.0;
+    _tiltMeasures.clear();
+}
+
+void Backend::changeAngle(float addition)
+{
+    _debugAngle += addition;
+}
+
+void Backend::changeMotionMode(bool isMotion)
+{
+    _isMotion = isMotion;
 }
 
 void Backend::connectCdu()
@@ -350,14 +370,24 @@ void Backend::changeRcMode(RcMode mode)
 
 void Backend::tiltSensorRead()
 {
-    _tiltReading = _tiltSensor->reading();
-    _tiltMeasures.append(_tiltReading->yRotation());
+    qreal yRotation = 0.0;
+    if (_isDebugMode) {
+        yRotation = static_cast<qreal>(_debugAngle);
+    }
+    else {
+        _tiltReading = _tiltSensor->reading();
+        yRotation = _tiltReading->yRotation();
+    }
+    _tiltMeasures.append(yRotation);
     if (_tiltMeasures.size() >= 16) {
         double value = std::accumulate(_tiltMeasures.begin(), _tiltMeasures.end(), 0.0) / _tiltMeasures.size();
         float angle = static_cast<float>(std::ceil(value * 2) / 2);
         float speed = angle * SPEED_FACTOR;
         _tiltMeasures.clear();
         emit doTiltXRotationChanged(angle, speed);
+        if (!_isMotion) {
+            speed = 0.0;
+        }
         QByteArray data;
         data.append(reinterpret_cast<char*>(&speed), sizeof(speed));
         sendMessageToTrainingPc(MessageId::ManipulatorStateId, data);
