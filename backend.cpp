@@ -27,10 +27,10 @@ Backend::Backend(QObject* parent)
 #ifdef ANDROID
     keepScreenOn(true);
 #endif
-    _cduIpAddress = QSettings().value("cduIpAddress", "127.0.0.1").toString();
-    _trainingPcIpAddress = QSettings().value("trainingPcIpAddress", "127.0.0.1").toString();
+    _cduIpAddress = QSettings().value("cduIpAddress", "192.168.100.1").toString();
+    _trainingPcIpAddress = QSettings().value("trainingPcIpAddress", "192.168.100.3").toString();
     _cduPort = QSettings().value("cduPort", "49001").toInt();
-    _trainingPcPort = QSettings().value("trainingPcPort", "49002").toInt();
+    _trainingPcPort = QSettings().value("trainingPcPort", "50003").toInt();
 
     connect(&_cduWatchdog, &QTimer::timeout, this, &Backend::cduWatchdogTimeout);
     _cduWatchdog.setInterval(WATCHDOG_INTERVAL_MS);
@@ -170,6 +170,24 @@ void Backend::changeAngle(float addition)
 void Backend::changeMotionMode(bool isMotion)
 {
     _isMotion = isMotion;
+}
+
+void Backend::setOperatorCenterView()
+{
+    QByteArray data;
+    sendMessageToTrainingPc(MessageId::OperatorViewCenter);
+}
+
+void Backend::setOperatorLeftView()
+{
+    QByteArray data;
+    sendMessageToTrainingPc(MessageId::OperatorViewLeft);
+}
+
+void Backend::setOperatorRightView()
+{
+    QByteArray data;
+    sendMessageToTrainingPc(MessageId::OperatorViewRight);
 }
 
 void Backend::connectCdu()
@@ -382,14 +400,17 @@ void Backend::tiltSensorRead()
     if (_tiltMeasures.size() >= 16) {
         double value = std::accumulate(_tiltMeasures.begin(), _tiltMeasures.end(), 0.0) / _tiltMeasures.size();
         float angle = static_cast<float>(std::ceil(value * 2) / 2);
+        float correctedAngle = correctAngleValue(angle);
         float speed = angle * SPEED_FACTOR;
+        float correctedSpeed = correctedAngle * SPEED_FACTOR;
         _tiltMeasures.clear();
         emit doTiltXRotationChanged(angle, speed);
         if (!_isMotion) {
             speed = 0.0;
         }
         QByteArray data;
-        data.append(reinterpret_cast<char*>(&speed), sizeof(speed));
+        data.append(reinterpret_cast<char*>(&correctedSpeed), sizeof(correctedSpeed));
+        qDebug() << "Corrected angle: " << correctedAngle;
         sendMessageToTrainingPc(MessageId::ManipulatorStateId, data);
     }
 }
@@ -421,6 +442,25 @@ void Backend::sendMessageToCdu(MessageId messageId, QByteArray data)
             _cduTcpSocket->write(data);
         }
         _cduTcpSocket->flush();
+    }
+}
+
+float Backend::correctAngleValue(float angle)
+{
+    if (angle >= -1 && angle <= 2) {
+        return 0.0;
+    }
+    else if (angle >= -3 && angle <= -1) {
+        return -2.0;
+    }
+    else if (angle <= -3) {
+        return -5.0;
+    }
+    else if (angle > 2 && angle <= 12) {
+        return (angle - 2);
+    }
+    else if (angle > 12) {
+        return 10.0;
     }
 }
 

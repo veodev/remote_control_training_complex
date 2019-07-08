@@ -24,7 +24,8 @@ ApplicationWindow {
     StackView {
         id: stackView;
         anchors.fill: parent
-        initialItem: loadingPage        
+//        initialItem: loadingPage
+        initialItem: mainPage
     }
 
     Row {
@@ -121,10 +122,10 @@ ApplicationWindow {
 
         onDoTrainingPcDisconnected: {
             tpcConnectionRectangle.color = "red"
-            if (settingsPage.visible === false) {
-                stackView.pop()
-                stackView.push(loadingPage)
-            }
+//            if (settingsPage.visible === false) {
+//                stackView.pop()
+//                stackView.push(loadingPage)
+//            }
         }
     }
     onClosing: {

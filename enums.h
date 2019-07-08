@@ -19,7 +19,10 @@ enum class MessageId : unsigned char
     JumpTrackCoordinateId = 14,
     ManipulatorStateId = 15,
     PingId = 16,
-    RailTypeId = 17
+    RailTypeId = 17,
+    OperatorViewCenter = 18,
+    OperatorViewLeft = 19,
+    OperatorViewRight = 20,
 };
 
 enum class OperatorAction : unsigned char

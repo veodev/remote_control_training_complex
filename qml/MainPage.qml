@@ -4,8 +4,9 @@ import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 
 
-Page {   
+Page {
     id: page
+    width: 800
     Rectangle {
         id: rcRectangle
         anchors.fill: parent
@@ -22,6 +23,64 @@ Page {
             GradientStop {position: 0.5; color: "#ababab"}
             GradientStop {position: 1; color: "#ffffff";}
         }
+
+        Image {
+            id: image3
+            x: 582
+            y: 42
+            width: 57
+            height: 54
+            fillMode: Image.PreserveAspectFit
+            source: "../pictures/eye.jpg"
+        }
+
+        Image {
+            id: leftViewImage
+            x: 576
+            y: 102
+            width: 68
+            height: 64
+            fillMode: Image.PreserveAspectFit
+            source: "../pictures/left.jpg"
+            MouseArea {
+                anchors.fill: parent
+                onReleased: {
+                    backend.setOperatorLeftView()
+                }
+            }
+        }
+
+        Image {
+            id: centerViewImage
+            x: 576
+            y: 165
+            width: 68
+            height: 62
+            fillMode: Image.PreserveAspectFit
+            source: "../pictures/center.jpg"
+            MouseArea {
+                anchors.fill: parent
+                onReleased: {
+                    backend.setOperatorCenterView()
+                }
+            }
+        }
+
+        Image {
+            id: rightViewImage
+            x: 546
+            y: 226
+            width: 130
+            height: 65
+            fillMode: Image.PreserveAspectFit
+            source: "../pictures/right.jpg"
+            MouseArea {
+                anchors.fill: parent
+                onReleased: {
+                    backend.setOperatorRightView()
+                }
+            }
+        }
     }
     Rectangle {
         id: trackMarkButtonRectangle
@@ -30,8 +89,8 @@ Page {
         color: "#636363"
         border.color: "#000000"
         border.width: 10
-        x: 52
-        y: 49
+        x: 56
+        y: 53
         Button {
             id: trackmarkButton
             width: parent.width - 20 - parent.border.width
@@ -52,8 +111,8 @@ Page {
         color: "#636363"
         border.color: "#000000"
         border.width: 10
-        x: 289
-        y: 49
+        x: 288
+        y: 53
 
         Button {
             id: serviceMarkButton
@@ -75,8 +134,8 @@ Page {
         color: "#636363"
         border.color: "#000000"
         border.width: 10
-        x: 52
-        y: 191
+        x: 56
+        y: 187
         Button {
             id: boltJointButton
             width: parent.width - 20 - parent.border.width
@@ -135,8 +194,8 @@ Page {
 
     Rectangle {
         id: operatorActionsButtonRectangle
-        x: 289
-        y: 192
+        x: 288
+        y: 187
         width: 120
         height: 120
         color: "#636363"

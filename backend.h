@@ -39,6 +39,9 @@ public:
     Q_INVOKABLE void setDebugMode(bool isDebug);
     Q_INVOKABLE void changeAngle(float addition);
     Q_INVOKABLE void changeMotionMode(bool isMotion);
+    Q_INVOKABLE void setOperatorCenterView();
+    Q_INVOKABLE void setOperatorLeftView();
+    Q_INVOKABLE void setOperatorRightView();
 
 signals:
     void doCduConnected();
@@ -77,6 +80,7 @@ private:
     void tiltSensorRead();
     void sendMessageToTrainingPc(MessageId messageId, QByteArray data = QByteArray());
     void sendMessageToCdu(MessageId messageId, QByteArray data = QByteArray());
+    float correctAngleValue(float angle);
 
 private:
     QTcpSocket* _cduTcpSocket;
