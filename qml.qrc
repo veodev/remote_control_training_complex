@@ -10,9 +10,12 @@
         <file>pictures/service_marks_icon.png</file>
         <file>pictures/track_marks_icon.png</file>
         <file>qml/LoadingPage.qml</file>
-        <file>pictures/center.jpg</file>
-        <file>pictures/eye.jpg</file>
-        <file>pictures/left.jpg</file>
-        <file>pictures/right.jpg</file>
+        <file>pictures/eye.png</file>
+        <file>pictures/center_released.png</file>
+        <file>pictures/left_released.png</file>
+        <file>pictures/right_released.png</file>
+        <file>pictures/center_pressed.png</file>
+        <file>pictures/left_pressed.png</file>
+        <file>pictures/right_pressed.png</file>
     </qresource>
 </RCC>

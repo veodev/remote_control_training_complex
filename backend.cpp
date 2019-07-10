@@ -406,7 +406,7 @@ void Backend::tiltSensorRead()
         _tiltMeasures.clear();
         emit doTiltXRotationChanged(angle, speed);
         if (!_isMotion) {
-            speed = 0.0;
+            correctedSpeed = 0.0;
         }
         QByteArray data;
         data.append(reinterpret_cast<char*>(&correctedSpeed), sizeof(correctedSpeed));

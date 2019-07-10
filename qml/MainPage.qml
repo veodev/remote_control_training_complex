@@ -6,15 +6,23 @@ import QtQuick.Window 2.2
 
 Page {
     id: page
-    width: 800
+    width: 670
+
+    property bool isViewCenter: true
+    property bool isViewLeft: false
+    property bool isViewRight: false
+
     Rectangle {
         id: rcRectangle
-        anchors.fill: parent
         visible: true
         border.color: "black"
         border.width: 30
         radius: 10
+        anchors.right: parent.right
         anchors.rightMargin: 10
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.top: parent.top
         anchors.leftMargin: 10
         anchors.bottomMargin: 10
         anchors.topMargin: 10
@@ -25,59 +33,86 @@ Page {
         }
 
         Image {
-            id: image3
-            x: 582
-            y: 42
-            width: 57
-            height: 54
+            id: eyeImage
+            x: 484
+            y: 46
+            width: 100
+            height: 44
             fillMode: Image.PreserveAspectFit
-            source: "../pictures/eye.jpg"
+            source: "../pictures/eye.png"
         }
 
         Image {
             id: leftViewImage
-            x: 576
-            y: 102
-            width: 68
-            height: 64
+            x: 621
+            y: 109
+            width: 110
+            height: 50
             fillMode: Image.PreserveAspectFit
-            source: "../pictures/left.jpg"
+            source: "../pictures/left_released.png"
+            anchors.horizontalCenter: eyeImage.horizontalCenter
             MouseArea {
                 anchors.fill: parent
                 onReleased: {
-                    backend.setOperatorLeftView()
+                    if (!isViewLeft) {
+                        backend.setOperatorLeftView();
+                        leftViewImage.source = "../pictures/left_pressed.png";
+                        centerViewImage.source = "../pictures/center_released.png";
+                        rightViewImage.source = "../pictures/right_released.png";
+                        isViewLeft = true;
+                        isViewRight = false;
+                        isViewCenter = false;
+                    }
                 }
             }
         }
 
         Image {
             id: centerViewImage
-            x: 576
+            x: 631
             y: 165
-            width: 68
-            height: 62
+            width: 100
+            height: 61
             fillMode: Image.PreserveAspectFit
-            source: "../pictures/center.jpg"
+            source: "../pictures/center_pressed.png"
+            anchors.horizontalCenter: eyeImage.horizontalCenter
             MouseArea {
                 anchors.fill: parent
                 onReleased: {
-                    backend.setOperatorCenterView()
+                    if (!isViewCenter) {
+                        backend.setOperatorCenterView();
+                        centerViewImage.source = "../pictures/center_pressed.png";
+                        leftViewImage.source = "../pictures/left_released.png";
+                        rightViewImage.source = "../pictures/right_released.png";
+                        isViewCenter = true;
+                        isViewLeft = false;
+                        isViewRight = false;
+                    }
                 }
             }
         }
 
         Image {
             id: rightViewImage
-            x: 546
-            y: 226
+            x: 616
+            y: 240
             width: 130
-            height: 65
+            height: 50
             fillMode: Image.PreserveAspectFit
-            source: "../pictures/right.jpg"
+            source: "../pictures/right_released.png"
+            anchors.horizontalCenter: eyeImage.horizontalCenter
             MouseArea {
                 anchors.fill: parent
                 onReleased: {
-                    backend.setOperatorRightView()
+                    if (!isViewRight) {
+                        backend.setOperatorRightView()
+                        rightViewImage.source = "../pictures/right_pressed.png";
+                        centerViewImage.source = "../pictures/center_released.png";
+                        leftViewImage.source = "../pictures/left_released.png";
+                        isViewRight = true;
+                        isViewLeft = false;
+                        isViewCenter = false;
+                    }
                 }
             }
         }
@@ -111,7 +146,7 @@ Page {
         color: "#636363"
         border.color: "#000000"
         border.width: 10
-        x: 288
+        x: 267
         y: 53
 
         Button {
@@ -153,8 +188,8 @@ Page {
     Image {
         id: image
         y: 64
-        width: 100
-        height: 100
+        width: 80
+        height: 80
         anchors.left: trackMarkButtonRectangle.right
         anchors.leftMargin: 5
         anchors.verticalCenter: trackMarkButtonRectangle.verticalCenter
@@ -165,14 +200,16 @@ Page {
     Image {
         id: image1
         y: 64
-        width: 100
-        height: 100
+        width: 80
+        height: 80
         anchors.left: serviceMarkButtonRectangle.right
         anchors.leftMargin: 5
         anchors.verticalCenter: serviceMarkButtonRectangle.verticalCenter
         fillMode: Image.PreserveAspectFit
         source: "../pictures/service_marks_icon.png"
         MouseArea {
+            width: 80
+            height: 80
             anchors.fill: parent
             onPressAndHold: {
                 stackView.push(tiltSensorPage)
@@ -183,8 +220,8 @@ Page {
     Image {
         id: image2
         y: 245
-        width: 100
-        height: 100
+        width: 80
+        height: 80
         anchors.left: boltJointButtonRectangle.right
         anchors.leftMargin: 5
         anchors.verticalCenter: boltJointButtonRectangle.verticalCenter
@@ -194,7 +231,7 @@ Page {
 
     Rectangle {
         id: operatorActionsButtonRectangle
-        x: 288
+        x: 267
         y: 187
         width: 120
         height: 120
@@ -217,12 +254,12 @@ Page {
     Rectangle {
         id: rectangle
         y: 240
-        width: 117
-        height: 77
+        width: 89
+        height: 68
         color: "#00000000"
         radius: 0
         anchors.left: operatorActionsButtonRectangle.right
-        anchors.leftMargin: 20
+        anchors.leftMargin: 14
         anchors.verticalCenterOffset: 0
         anchors.verticalCenter: operatorActionsButtonRectangle.verticalCenter
         border.width: 3
@@ -236,7 +273,7 @@ Page {
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             wrapMode: Text.WordWrap
-            font.pixelSize: 17
+            font.pixelSize: 12
         }
 
     }
